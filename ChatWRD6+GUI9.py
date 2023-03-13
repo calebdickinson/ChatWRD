@@ -23,7 +23,13 @@ class TextGenerator:
         
     def preprocess_text(self, text):
         text = text.lower()
-        special_chars = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', "'", '"', ',', '.', '<', '>', '/', '?', '|', '\\', '`', '~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        special_chars = [
+            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
+            '-', '_', '=', '+', '[', ']', '{', '}', ';', ':',
+            "'", '"', ',', '.', '<', '>', '/', '?', '|', '\\',
+            '`', '~',
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+            ]
         for char in special_chars:
             text = text.replace(char, ' ')
         words = text.split()
@@ -106,7 +112,7 @@ class TypingText:
 
 
 mixer.init()
-mixer.music.load('ChatWRD/ambient I.wav')
+mixer.music.load('ambient I.wav')
 mixer.music.play(loops=-1)
 window = tk.Tk()
 window.title('ChatWRD: LOVECRAFTIA')
@@ -115,9 +121,9 @@ canvas = tk.Canvas(window, width=600, height=600)
 canvas.pack()
 rand_num = random.randint(1, 31)
 if rand_num <= 19:
-    image_path = f'ChatWRD/lovecraftian landscape{rand_num}.jpg'
+    image_path = f'lovecraftian landscape{rand_num}.jpg'
 else:
-    image_path = f'ChatWRD/lovecraftian seascape{rand_num-19}.jpg'
+    image_path = f'lovecraftian seascape{rand_num-19}.jpg'
 image = Image.open(image_path)
 image = image.resize((600, 600))
 tk_image = ImageTk.PhotoImage(image)
@@ -152,7 +158,7 @@ def button_click():
     print(f'Menu option: {var.get()}')
     
     if __name__ == '__main__':
-        generator = TextGenerator('ChatWRD/lovecraft2.txt', user_input)
+        generator = TextGenerator('lovecraft2.txt', user_input)
         generator.train_model()
         generated_text = generator.generate_text(var.get())
         print(generated_text)
