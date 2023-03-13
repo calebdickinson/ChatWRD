@@ -16,7 +16,7 @@ randomly selects a window image from an image bank of 31 images (19 lovecraftian
 I generated the images using Stable Diffusion.  
 The chatbot uses a .txt file made up of several stories by H. P. Lovecraft.  
 I originally planned to use the complete works of H. P. Lovecraft, but due to the processing limitations of my computer,  
-it would take a very long time to generate output based on that file so instead,  
+it would take a very long time to generate output based on that file, so instead,  
 my .txt file the chatbot trains on is a couple of his stories that I randomly chose.    
 
 It would be pretty easy to change the txt. file that this chatbot trains on.   
