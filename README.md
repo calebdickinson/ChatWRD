@@ -7,7 +7,10 @@ The code, when run, generates a tkinter window with a user imput box where you c
 There is a drop down menu below that with a selection of numbers between 1 and 300.  
 The number you choose will be the number of words in the sentence ChatWRD generates as a reply.  
 When you hit the "Submit" button, the code runs and generates a reply.  
-Keep in mind that this will take several minutes.  
+Keep in mind that this will take several minutes.
+The tkinter window will freeze and say (Not Responding) in the window title.
+Don't worry; it doesn't mean anything is going wrong.  
+I'm not sure why it does this or how to fix it, but as soon as the reply is generated it goes back to normal.
 The chatbot's reply to your prompt then types itself across the bottom of the screen.  
 
 I wrote the music using Vital Synth and Cakewalk DAW and edited it with Audacity audio editor.  
