@@ -1,4 +1,4 @@
-# ChatWRD
+# ChatWRD-Lovecraftian
 Creepy chatbot trained on Lovecraft stories.  
 The WRD in ChatWRD stands for WORD, but in the context of a Lovecraftian chatbot could also be read as ChatWEIRD,  
 as Lovecraftian horror is technically in the weird genre of fiction.  
