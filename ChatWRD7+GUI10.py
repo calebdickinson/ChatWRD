@@ -23,15 +23,6 @@ class TextGenerator:
         
     def preprocess_text(self, text):
         text = text.lower()
-        special_chars = [
-            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
-            '-', '_', '=', '+', '[', ']', '{', '}', ';', ':',
-            "'", '"', ',', '.', '<', '>', '/', '?', '|', '\\',
-            '`', '~',
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
-            ]
-        for char in special_chars:
-            text = text.replace(char, ' ')
         words = text.split()
         word_ids = {word: i for i, word in enumerate(sorted(set(words)))}
         word_seq = [word_ids[word] for word in words]
@@ -59,13 +50,21 @@ class TextGenerator:
             predicted_id = tf.argmax(predictions, axis=-1).numpy()
             generated_text.append(self.id_words.get(predicted_id, ' '))
             self.seed_text = ' '.join(generated_text[-timesteps:])
-        
         words = (' '.join(generated_text))
         words_list = words.split()[timesteps:]
         words_list = [word.capitalize() if word == "i" else word for word in words_list]
+        words_list = [word.replace(" .", ".") for word in words_list]
+        punctuations = ['.', '?', '!']
+        for i, word in enumerate(words_list):
+            if i > 0 and words_list[i-1][-1] in punctuations:
+                words_list[i] = word.capitalize()
         words_list[0] = words_list[0].capitalize()
-        return ' '.join(words_list) + '.'    
-    
+        if words_list[-1][-1] == '.':
+            return ' '.join(words_list)
+        else:
+            return ' '.join(words_list) + '.'
+
+        
     def train_model(self):
         X_train = np.array([self.word_seq[i:i+len(self.seed_text.split())] for i in range(len(self.word_seq)-len(self.seed_text.split()))])
         y_train = np.array([self.word_seq[i+len(self.seed_text.split())] for i in range(len(self.word_seq)-len(self.seed_text.split()))])
@@ -112,7 +111,7 @@ class TypingText:
 
 
 mixer.init()
-mixer.music.load('ambient I.wav')
+mixer.music.load('ChatWRD-Lovecraftia/ambient I.wav')
 mixer.music.play(loops=-1)
 window = tk.Tk()
 window.title('ChatWRD: LOVECRAFTIA')
@@ -121,9 +120,9 @@ canvas = tk.Canvas(window, width=600, height=600)
 canvas.pack()
 rand_num = random.randint(1, 31)
 if rand_num <= 19:
-    image_path = f'lovecraftian landscape{rand_num}.jpg'
+    image_path = f'ChatWRD-Lovecraftia/lovecraftian landscape{rand_num}.jpg'
 else:
-    image_path = f'lovecraftian seascape{rand_num-19}.jpg'
+    image_path = f'ChatWRD-Lovecraftia/lovecraftian seascape{rand_num-19}.jpg'
 image = Image.open(image_path)
 image = image.resize((600, 600))
 tk_image = ImageTk.PhotoImage(image)
@@ -134,14 +133,12 @@ label = tk.Label(frame, text='Enter some text:', font=('Helvetica', 14), foregro
 label.pack(pady=5)
 text_box = tk.Entry(frame, font=('Helvetica', 12), borderwidth=0, background='#eeeeee')
 text_box.pack(pady=5)
-
-# Add horizontal scrollbar to text box
 scrollbar = tk.Scrollbar(frame, orient='horizontal', command=text_box.xview)
 scrollbar.pack(fill='x')
 text_box.config(xscrollcommand=scrollbar.set)
 
 options = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, #1, 1 looks like a mistake but it's actually a bug fix.
     12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
     32, 34, 36, 38, 40, 42, 44, 46, 48, 50,
     55, 60, 65, 70, 80, 90, 100, 150, 200, 300
@@ -158,7 +155,7 @@ def button_click():
     print(f'Menu option: {var.get()}')
     
     if __name__ == '__main__':
-        generator = TextGenerator('lovecraft2.txt', user_input)
+        generator = TextGenerator('ChatWRD-Lovecraftia/lovecraft2.txt', user_input)
         generator.train_model()
         generated_text = generator.generate_text(var.get())
         print(generated_text)
